@@ -126,15 +126,29 @@
     chain(src(noiseBuf, t, dur), lp, env(t, dur * 0.3, v, dur * 0.7));
     crack(t, v * 0.7, dur, 1200);
   }
-  // Phoenix cry: a bright screech that glides up and down
+  // Phoenix cry: a raspy screech that jumps up, wavers, then falls away (two calls)
   function birdCry(t, v) {
-    const o = osc('sawtooth', 900, t, 0.75);
-    o.frequency.exponentialRampToValueAtTime(1750, t + 0.14);
-    o.frequency.exponentialRampToValueAtTime(1250, t + 0.42);
-    o.frequency.exponentialRampToValueAtTime(1480, t + 0.6);
-    const vib = osc('sine', 11, t, 0.75), vg = ctx.createGain(); vg.gain.value = 40;
-    vib.connect(vg); vg.connect(o.frequency);
-    chain(o, filt('bandpass', 2000, 3, t), filt('lowpass', 4200, 0.7, t), env(t, 0.04, v, 0.68));
+    const call = (t0, v0, f0, peak, dur) => {
+      const o1 = osc('sawtooth', f0, t0, dur), o2 = osc('square', f0 * 1.5, t0, dur);
+      [o1, o2].forEach((o, i) => {
+        const k = i ? 1.5 : 1;
+        o.frequency.setValueAtTime(f0 * k, t0);
+        o.frequency.exponentialRampToValueAtTime(peak * k, t0 + dur * 0.18);
+        o.frequency.exponentialRampToValueAtTime(peak * 0.82 * k, t0 + dur * 0.6);
+        o.frequency.exponentialRampToValueAtTime(f0 * 0.9 * k, t0 + dur);
+      });
+      // fast flutter in the volume makes it raspy, like a real bird of prey
+      const trem = ctx.createGain(); trem.gain.value = 0.6;
+      const fl = osc('sine', 34, t0, dur), fg = ctx.createGain(); fg.gain.value = 0.4;
+      fl.connect(fg); fg.connect(trem.gain);
+      const mix = ctx.createGain(); mix.gain.value = 0.5;
+      o1.connect(mix); o2.connect(mix); mix.connect(trem);
+      chain(trem, filt('bandpass', 2600, 2.2, t0), filt('lowpass', 5200, 0.7, t0), env(t0, 0.025, v0, dur));
+      // breathy part of the cry
+      chain(src(noiseBuf, t0, dur), filt('bandpass', 3200, 3, t0), env(t0, 0.03, v0 * 0.35, dur * 0.8));
+    };
+    call(t, v, 1300, 2500, 0.55);
+    call(t + 0.42, v * 0.6, 1500, 2300, 0.4);
   }
   function whistleDown(t, v, dur) {
     const o = osc('triangle', 1900, t, dur);
@@ -147,31 +161,6 @@
     g2.gain.setValueAtTime(0.0001, t); g2.gain.exponentialRampToValueAtTime(v * 0.6, t + dur); g2.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.06);
     g2.connect(out); chain(src(noiseBuf, t, dur + 0.1), bp, g2);
   }
-  // wolf howl: two slightly detuned voices gliding through vowel-like filters
-  function howl(t, v) {
-    const dur = 1.25;
-    const f = (o) => {
-      o.frequency.setValueAtTime(320, t);
-      o.frequency.exponentialRampToValueAtTime(560, t + 0.38);
-      o.frequency.linearRampToValueAtTime(540, t + 0.7);
-      o.frequency.exponentialRampToValueAtTime(400, t + 1.1);
-      o.frequency.exponentialRampToValueAtTime(350, t + dur);
-    };
-    const o1 = osc('sawtooth', 320, t, dur), o2 = osc('triangle', 322, t, dur);
-    f(o1); f(o2); o2.detune.value = 9;
-    const vib = osc('sine', 5.5, t, dur), vg = ctx.createGain();
-    vg.gain.setValueAtTime(2, t); vg.gain.linearRampToValueAtTime(12, t + dur);
-    vib.connect(vg); vg.connect(o1.frequency); vg.connect(o2.frequency);
-    const mix = ctx.createGain(); mix.gain.value = 0.5;
-    o1.connect(mix); o2.connect(mix);
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.18);
-    g.gain.setValueAtTime(v, t + 0.8); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    g.connect(out);
-    const f1 = filt('bandpass', 850, 4, t), f2 = filt('bandpass', 1500, 5, t), lp = filt('lowpass', 2400, 0.7, t);
-    mix.connect(f1); mix.connect(f2); f1.connect(lp); f2.connect(lp); lp.connect(g);
-    chain(src(noiseBuf, t, dur), filt('bandpass', 1300, 1.5, t), env(t, 0.2, v * 0.12, dur - 0.2));
-  }
   function iceCrack(t, v) {
     for (let i = 0; i < 6; i++) {
       const tt = t + i * (0.018 + Math.random() * 0.045);
@@ -182,6 +171,31 @@
       chain(osc('sine', 2300 + Math.random() * 2200, tt, 0.35), env(tt, 0.002, v * 0.18, 0.32));
     }
     thump(t, v * 0.5, 230, 90, 0.15);
+  }
+  // a glassy ping: a pure tone with a couple of thin overtones, like ice or a crystal glass
+  function chime(t, v, f, dur) {
+    chain(osc('sine', f, t, dur), env(t, 0.002, v, dur));
+    chain(osc('sine', f * 2.01, t, dur * 0.5), env(t, 0.002, v * 0.3, dur * 0.5));
+    chain(osc('sine', f * 3.97, t, dur * 0.25), env(t, 0.002, v * 0.12, dur * 0.25));
+  }
+  // a run of chimes from a cold, high scale
+  function shimmer(t, v, n, gap) {
+    const notes = [2093, 2349, 2637, 3136, 3520, 4186, 4699];
+    for (let i = 0; i < n; i++) {
+      const f = notes[Math.floor(Math.random() * notes.length)] * (Math.random() < 0.3 ? 0.5 : 1);
+      chime(t + i * gap * (0.7 + Math.random() * 0.6), v * (1 - i / (n + 2)), f, 0.45 + Math.random() * 0.4);
+    }
+  }
+  // freezing wind: hiss that sweeps up high, with a thin whistle on top
+  function iceWind(t, v, dur) {
+    const bp = filt('bandpass', 1500, 2.5, t);
+    bp.frequency.exponentialRampToValueAtTime(5200, t + dur * 0.35);
+    bp.frequency.exponentialRampToValueAtTime(2600, t + dur);
+    chain(src(noiseBuf, t, dur), bp, env(t, dur * 0.2, v, dur * 0.8));
+    const wh = filt('bandpass', 2400, 22, t);
+    wh.frequency.exponentialRampToValueAtTime(3600, t + dur * 0.4);
+    wh.frequency.exponentialRampToValueAtTime(2900, t + dur);
+    chain(src(noiseBuf, t, dur), wh, env(t, dur * 0.25, v * 1.6, dur * 0.75));
   }
   function blip(t, v, f) { chain(osc('sine', f, t, 0.07), env(t, 0.002, v, 0.06)); }
   function riser(t, v, dur, f0, f1, type) {
@@ -278,17 +292,18 @@
     driger: (t) => { whoosh(t, 0.45, 600, 2600, 900, 0.45); zap(t, 0.5, 0.24); },
     pounce2: (t) => { whoosh(t, 0.45, 700, 3000, 1000, 0.4); zap(t, 0.5, 0.2); },
     draciel: (t) => { bell(t, 0.35, 520, 0.7); thump(t, 0.35, 170, 90, 0.2); },
-    wolborg: (t) => { howl(t, 0.55); chain(src(noiseBuf, t, 0.5), filt('highpass', 4000, 0.7, t), env(t, 0.1, 0.12, 0.4)); },
+    // Frost Howl: a gust of freezing air, ice crystals forming (chimes + crackle), no growl
+    wolborg: (t) => { iceWind(t, 0.55, 0.7); shimmer(t + 0.05, 0.13, 6, 0.06); crack(t + 0.12, 0.2, 0.5, 6000); thump(t, 0.22, 180, 70, 0.18); },
     zeusMirror: (t) => { bell(t, 0.22, 1046, 0.6); bell(t + 0.04, 0.18, 1318, 0.6); },
     zeusRelease: (t) => { whoosh(t, 0.55, 400, 2200, 600, 0.35); zap(t, 0.35, 0.15); }
   };
   const SPECIAL = {
     tornado: (t) => { whoosh(t, 0.8, 200, 1600, 500, 0.7); thump(t, 0.4, 80, 40, 0.6); return windLoop(t + 0.15, 2.3, 0.55, 450, 1500); },
-    dive: (t) => { flameRoar(t, 0.7, 0.9); birdCry(t + 0.05, 0.45); return null; },
+    dive: (t) => { flameRoar(t, 0.75, 1.0); birdCry(t + 0.12, 0.4); return null; },
     eclipse: (t) => { riser(t, 0.35, 0.5, 900, 110, 'sawtooth'); thump(t, 0.5, 70, 30, 0.8); return droneLoop(t + 0.1, 2.4, 0.12, 55, 380); },
     claw: (t) => { riser(t, 0.35, 0.45, 220, 1400); zap(t + 0.35, 0.5, 0.18); return null; },
     maelstrom: (t) => { whoosh(t, 0.5, 200, 900, 250, 0.6); return waterLoop(t + 0.1, 2.6, 0.55); },
-    blizzard: (t) => { iceCrack(t, 0.5); return windLoop(t + 0.1, 2.8, 0.45, 900, 2400); },
+    blizzard: (t) => { iceCrack(t, 0.5); shimmer(t + 0.1, 0.12, 8, 0.09); return windLoop(t + 0.1, 2.8, 0.45, 900, 2400); },
     dimension: (t) => {
       const lp = filt('lowpass', 200, 1, t); lp.frequency.exponentialRampToValueAtTime(3000, t + 0.55);
       chain(src(noiseBuf, t, 0.6), lp, env(t, 0.5, 0.5, 0.08));
@@ -304,7 +319,7 @@
     parry: (t) => { bell(t, 0.5, 880, 0.9); bell(t, 0.35, 1320, 0.8); whoosh(t, 0.3, 800, 3000, 1200, 0.25); },
     block: (t) => { thump(t, 0.45, 160, 70, 0.22); chain(src(noiseBuf, t, 0.12), filt('lowpass', 700, 0.7, t), env(t, 0.003, 0.25, 0.1)); },
     freeze: (t) => { iceCrack(t, 0.9); iceCrack(t + 0.08, 0.6); },
-    howlHit: (t) => iceCrack(t, 0.45),
+    howlHit: (t) => { iceCrack(t, 0.4); chime(t, 0.1, 3136, 0.4); },
     absorb: (t) => { bell(t, 0.3, 1046, 0.7); bell(t + 0.05, 0.25, 1568, 0.7); },
     release: (t) => { thump(t, 0.6, 140, 45, 0.4); zap(t, 0.45, 0.2); bell(t, 0.2, 784, 0.5); },
     reflect: (t) => { bell(t, 0.25, 700, 0.35); },

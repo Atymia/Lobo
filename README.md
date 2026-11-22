@@ -12,7 +12,7 @@ A 3D spinning-top battle game you play in the browser, steering by tilting your 
 <p><img src="https://img.shields.io/badge/iPhone-supported-2c3546?style=flat-square&logo=apple&logoColor=white" alt="iPhone">
 <img src="https://img.shields.io/badge/Android-supported-2c3546?style=flat-square&logo=android&logoColor=white" alt="Android">
 <img src="https://img.shields.io/badge/desktop-supported-2c3546?style=flat-square&logo=googlechrome&logoColor=white" alt="Desktop">
-<img src="https://img.shields.io/badge/version-v47-ffb627?style=flat-square" alt="Version v47"></p>
+<img src="https://img.shields.io/badge/version-v48-ffb627?style=flat-square" alt="Version v48"></p>
 
 <p><a href="#-how-a-battle-works">How it works</a> ·
 <a href="#-the-beys">The beys</a> ·
@@ -51,15 +51,22 @@ Every bey has a **base move**, which recharges fast, is aimed when you press it 
 
 | Bey | Base move | Special move |
 |---|---|---|
-| **Dragoon** | **Gale Trail**: a dash that leaves a gust behind, and crossing it blows the opponent sideways | **Sky Tornado**: a tornado follows Dragoon, lifts the opponent up and throws it wherever you steer |
-| **Dranzer** | **Flame Arc**: a dash that curves towards the opponent | **Phoenix Dive**: Dranzer flies up, you aim a target on the ground and it dives. Dodge it and Dranzer is left stunned |
-| **Black Dranzer** | **Dark Claw**: the strongest dash, but missing costs some of its own spin | **Eclipse Drain**: a dark sphere that drains the opponent's spin and gives it to Black Dranzer |
-| **Driger** | **Twin Pounce**: two dashes in a row, and you can re-aim the second | **Thunder Claw**: three lunges. Tap in rhythm with the closing ring to land them perfectly |
+| **Dragoon** | **Gale Trail**: a dash that leaves a gust behind, and crossing it blows the opponent sideways | **Sky Tornado**: a huge tornado follows Dragoon, lifts the opponent up and throws it wherever you steer |
+| **Dranzer** | **Flame Arc**: a dash that curves towards the opponent, with a trail of fire behind it | **Phoenix Dive**: Dranzer takes off as a bird of fire. The target follows your opponent by itself (tilt to fine-tune it), then the bird folds its wings and dives. Dodge it and Dranzer is left stunned |
+| **Black Dranzer** | **Dark Claw**: the strongest dash, wrapped in black flames, but missing costs some of its own spin | **Eclipse Drain**: a black sun rises over the stadium and drains the opponent's spin into Black Dranzer |
+| **Driger** | **Twin Pounce**: two electric dashes in a row, and you can re-aim the second | **Thunder Claw**: three claw slashes. Tap in rhythm with the closing ring, and a perfect one calls down lightning |
 | **Draciel** | **Iron Shell**: blocks most of the damage. Raise it right before a hit and it **parries**, sending the damage back | **Maelstrom**: Draciel anchors itself in a whirlpool that pulls the opponent in and slows it down |
-| **Wolborg** | **Frost Howl**: a cone of cold that slows whatever it touches | **White Blizzard**: the whole stadium freezes. The opponent slides around, and one touch seals it in ice |
+| **Wolborg** | **Frost Howl**: a blast of freezing mist and ice shards that slows whatever it touches | **White Blizzard**: ice spikes burst out around Wolborg and the whole stadium freezes. The opponent slides around, and one touch seals it in ice |
 | **Zeus** | **Mirror Guard**: soaks up a hit, then fires it back with a dash | **Dark Dimension**: half of every hit on Zeus bounces back, and lightning strikes where the opponent stands |
 
 All the effects (fire, wind, water, ice, darkness, lightning) are drawn live with shaders and particles. Every move has its own sound too, generated in the browser instead of loaded from audio files.
+
+### 🆕 What changed in v48
+
+- **Phoenix Dive got a real bird of fire.** Dranzer now rises as a phoenix with burning wings, flaps while you aim, then folds its wings and crashes down in a ring of fire.
+- **Phoenix Dive is a lot easier to land.** The target used to stay where you left it, so you had to chase your opponent by hand. Now it follows them for you, and the hit area is bigger. A good dodge still gets out of it.
+- **Frost Howl sounds icy now**: freezing wind and ice crystals instead of the old howl, which honestly sounded weird.
+- **Every move looks better**: a fire comet behind Flame Arc, black flames on Dark Claw, a bigger tornado, claw slashes for Thunder Claw, a black sun for Eclipse Drain, ice spikes for White Blizzard, thicker lightning for Zeus, and more.
 
 ## 🏆 Modes
 
@@ -118,7 +125,7 @@ Good to know:
 ## 💬 Feedback
 
 Found a bug or have an idea? Open an [issue](https://github.com/Atymia/Bey-Arena/issues). It helps a lot if you tell me:
-- the version on the start screen (e.g. `v47`),
+- the version on the start screen (e.g. `v48`),
 - your phone or computer and browser (e.g. *iPhone 15, Safari*),
 - what happened, and which beys were fighting.
 

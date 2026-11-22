@@ -960,7 +960,7 @@ function startBattleLoop() {
 }
 
 // --- Small helpers shared by moves and AI ---
-const GAME_VERSION = 'v47'; // shown on the start screen, handy to check an update went live
+const GAME_VERSION = 'v48'; // shown on the start screen, handy to check an update went live
 const AI_SKILL = 0.55; // the CPU's skill in normal play (0 = sloppy, 1 = sharp)
 let AI_STYLE_OVERRIDE = null; // for testing: force the same movement style on every CPU
 // events -> effects + sound (hit.mp3 for clashes/walls, sfx.js for the moves)
@@ -1176,10 +1176,10 @@ function aiMoves(f, o, dt) {
 function applySteer(f, v, dt) {
   if (f.out || f.spin <= 0) return;
   if (f.airborne) {
-    // Phoenix Dive aim: the stick moves the target, not the bey
+    // Phoenix Dive aim: the target follows the rival on its own, the stick just nudges it
     const s = f.special;
-    if (s && s.kind === 'dive' && s.phase === 'aim' && isHuman(f)) {
-      s.tx += v.x * 330 * dt; s.ty += v.y * 330 * dt;
+    if (s && s.kind === 'dive' && (s.phase === 'rise' || s.phase === 'aim' || s.phase === 'lock') && isHuman(f)) {
+      s.tx += v.x * 240 * dt; s.ty += v.y * 240 * dt;
     }
     return;
   }
@@ -1761,7 +1761,7 @@ function stepSpecial(f, dt) {
       break;
     }
     case 'dive': {
-      const RISE = 0.45, AIM = 0.75, LOCK = 0.35, DIVE = 0.3, H = 85;
+      const RISE = 0.45, AIM = 0.75, LOCK = 0.35, DIVE = 0.3, H = 62;   // H is only how high it's drawn
       const lim = ARENA.r - BEY_R - 6;
       if (!isHuman(f) && (s.phase === 'rise' || s.phase === 'aim')) {
         // the CPU aims the target at the rival, a little ahead; weaker CPUs lag behind
@@ -1770,6 +1770,13 @@ function stepSpecial(f, dt) {
         const ty = o.y + o.vy * 0.5 * sk + gauss() * (1 - sk) * 6;
         s.tx += (tx - s.tx) * Math.min(1, lag * dt);
         s.ty += (ty - s.ty) * Math.min(1, lag * dt);
+      } else if (isHuman(f) && s.phase !== 'dive' && s.phase !== 'land') {
+        // players get help: the target drifts onto the rival (a bit ahead of it),
+        // and keeps homing in slowly even after it locks. It was way too hard by hand
+        const pull = s.phase === 'lock' ? 1.4 : 4.5;   // softer once locked, so it can still be dodged
+        const tx = o.x + o.vx * 0.25, ty = o.y + o.vy * 0.25;
+        s.tx += (tx - s.tx) * Math.min(1, pull * dt);
+        s.ty += (ty - s.ty) * Math.min(1, pull * dt);
       }
       const tr = Math.hypot(s.tx, s.ty);
       if (tr > lim) { s.tx *= lim / tr; s.ty *= lim / tr; }
@@ -1791,7 +1798,7 @@ function stepSpecial(f, dt) {
         if (k >= 1) {
           f.airborne = false; s.h = 0; s.phase = 'land'; s.pt = 0;
           const hd = Math.hypot(o.x - s.tx, o.y - s.ty);
-          if (hd < 60 && !o.airborne) {
+          if (hd < 74 && !o.airborne) {
             const got = dealDamage(f, o, scaled(f, o, 0.17), 'dive');
             const kx = (o.x - s.tx) / (hd || 1), ky = (o.y - s.ty) / (hd || 1);
             o.vx += (hd > 1 ? kx : 1) * 380; o.vy += (hd > 1 ? ky : 0) * 380;
@@ -1799,8 +1806,8 @@ function stepSpecial(f, dt) {
             s.hit = true;
             emit('diveHit', { x: s.tx, y: s.ty, power: got });
           } else {
-            f.stun = 0.7;
-            f.spin = Math.max(0.01, f.spin - 0.025);
+            f.stun = 0.5;
+            f.spin = Math.max(0.01, f.spin - 0.02);
             s.hit = false;
             emit('diveMiss', { x: s.tx, y: s.ty });
           }
