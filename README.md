@@ -7,7 +7,7 @@
 <p><b>Spin. Clash. Ring them out.</b><br>
 A 3D spinning-top battle game you play in the browser, steering by tilting your phone.</p>
 
-<p><a href="https://atymia.github.io/Bey-Arena/"><img src="https://img.shields.io/badge/▶%20play%20now-in%20your%20browser-ffb627?style=for-the-badge&labelColor=11151d" alt="Play now in your browser"></a></p>
+<p><a href="https://atymia.github.io/Lobo/"><img src="https://img.shields.io/badge/▶%20play%20now-in%20your%20browser-ffb627?style=for-the-badge&labelColor=11151d" alt="Play now in your browser"></a></p>
 
 <p><img src="https://img.shields.io/badge/iPhone-supported-2c3546?style=flat-square&logo=apple&logoColor=white" alt="iPhone">
 <img src="https://img.shields.io/badge/Android-supported-2c3546?style=flat-square&logo=android&logoColor=white" alt="Android">
@@ -100,7 +100,7 @@ A few things I learned playing it:
 
 ## On your phone
 
-Open **[atymia.github.io/Bey-Arena](https://atymia.github.io/Bey-Arena/)** and turn the phone sideways. It's even better if you add it to your home screen, because then it opens fullscreen like a normal app.
+Open **[atymia.github.io/Lobo](https://atymia.github.io/Lobo/)** and turn the phone sideways. It's even better if you add it to your home screen, because then it opens fullscreen like a normal app.
 
 | iPhone (Safari) | Android (Chrome) |
 |---|---|
@@ -116,7 +116,7 @@ Good to know:
 
 ## Feedback
 
-If you find a bug or have an idea, open an [issue](https://github.com/Atymia/Bey-Arena/issues). It really helps if you tell me:
+If you find a bug or have an idea, open an [issue](https://github.com/Atymia/Lobo/issues). It really helps if you tell me:
 - the version on the start screen,
 - your phone or computer and browser (for example *iPhone 15, Safari*),
 - what happened, and which beys were fighting.
@@ -183,4 +183,4 @@ Lobo is an independent, non-commercial fan project. It isn't affiliated with or 
 
 © 2026 MrHide (Atymia). **All rights reserved.**
 
-This isn't an open source project. You're welcome to play the game and read the code, but please don't copy, reuse, republish or sell the code, graphics or sounds without asking me first. The full terms are in [LICENSE](LICENSE). If you'd like to use something from the project, just [open an issue](https://github.com/Atymia/Bey-Arena/issues) and ask.
+This isn't an open source project. You're welcome to play the game and read the code, but please don't copy, reuse, republish or sell the code, graphics or sounds without asking me first. The full terms are in [LICENSE](LICENSE). If you'd like to use something from the project, just [open an issue](https://github.com/Atymia/Lobo/issues) and ask.
