@@ -1,182 +1,187 @@
-<p align="center">
-  <img src="images/banner.jpg" alt="Lobo: Dragoon's tornado and Dranzer's flame dash in the stadium" width="100%">
-</p>
+<div align="center">
 
-<p align="center">
-  <a href="https://atymia.github.io/Bey-Arena/"><b>▶ Play it in your browser</b></a> ·
-  <a href="#how-a-battle-works">How it works</a> ·
-  <a href="#the-spinners">Spinners</a> ·
-  <a href="#controls">Controls</a> ·
-  <a href="#playing-on-a-phone">On a phone</a> ·
-  <a href="#how-its-built">How it's built</a>
-</p>
+<img src="images/logo.png" alt="Lobo icon" width="128">
+
+<h1>Lobo</h1>
+
+<p><b>Spin. Clash. Ring them out.</b><br>
+A 3D spinning-top battle game you play in the browser, steering by tilting your phone.</p>
+
+<p><a href="https://atymia.github.io/Bey-Arena/"><img src="https://img.shields.io/badge/▶%20play%20now-in%20your%20browser-ffb627?style=for-the-badge&labelColor=11151d" alt="Play now in your browser"></a></p>
+
+<p><img src="https://img.shields.io/badge/iPhone-supported-2c3546?style=flat-square&logo=apple&logoColor=white" alt="iPhone">
+<img src="https://img.shields.io/badge/Android-supported-2c3546?style=flat-square&logo=android&logoColor=white" alt="Android">
+<img src="https://img.shields.io/badge/desktop-supported-2c3546?style=flat-square&logo=googlechrome&logoColor=white" alt="Desktop">
+<img src="https://img.shields.io/badge/version-v47-ffb627?style=flat-square" alt="Version v47"></p>
+
+<p><a href="#-how-a-battle-works">How it works</a> ·
+<a href="#-the-beys">The beys</a> ·
+<a href="#-modes">Modes</a> ·
+<a href="#-controls">Controls</a> ·
+<a href="#-on-your-phone">On your phone</a></p>
+
+<img src="images/banner.jpg" alt="Dragoon's tornado and Dranzer's flame dash in the stadium" width="100%">
+
+</div>
 
 ---
 
-Lobo is a small 3D battle game about spinning tops, inspired by the first Beyblade series (plus Zeus from G-Revolution). You pick a top, launch it into the stadium and steer it around, trying to knock your rival out of the ring or simply outlast it. On a phone you steer by tilting the screen, which is honestly the most fun way to play.
+Lobo is a little hobby project of mine: a battle game about spinning tops, inspired by the first Beyblade series (plus Zeus from G-Revolution, because I couldn't leave him out). You pick a bey, launch it into the stadium and steer it around, trying to knock your opponent out of the ring or just outlast it.
 
-It runs entirely in the browser, no install needed:
+You can play it with a joystick on screen, but on a phone you steer by **tilting the phone**, and that's really how it's meant to be played.
 
-**👉 [atymia.github.io/Bey-Arena](https://atymia.github.io/Bey-Arena/)**
+No downloads, no accounts. Open the link and play.
 
-It's a hobby project and still evolving, so if you try it, I'd love to hear what you think (see [Feedback](#feedback)).
+## ⚡ How a battle works
 
-## How a battle works
+Every bey starts at full spin, and spin is your health. It drops slowly on its own and a lot faster every time you get hit. A round ends when a bey stops spinning, when it gets knocked into one of the KO pockets in the wall, or when time runs out (then whoever has more spin left wins). First to win 2 rounds takes the match.
 
-Each top starts at full spin, and spin is basically your health: it drops slowly over time and faster every time you get hit. A round ends when one top stops spinning, when one gets knocked into one of the KO pockets on the stadium wall, or when the timer runs out. In that case, whoever has more spin left wins.
+The one thing I really wanted: **you win the fight, not your bey's stats.**
 
-The thing I cared about most is that **you** win the fight, not your top's stats:
+- **How you hit matters most.** The faster you're going when you crash into the other bey, the more spin it loses. Whoever charges in deals most of the damage, so waiting around doesn't pay.
+- **Stats are just flavour.** A defense type is harder to push, an attack type is quicker, but stats only change damage by a few percent. Picking Dranzer over Draciel won't win the match for you.
+- **Grinding doesn't count.** Two beys rubbing against each other won't keep draining spin. Clean hits do.
+- **Every special can be dodged.** There's always a warning first: a target on the ground, lightning markers, a ring closing in. Move in time and it misses.
 
-- **How hard a hit lands depends on how you hit.** The faster you're moving when you crash into the other top, the more spin it loses. And whoever drives into the clash deals most of the damage, so sitting still and waiting is a bad idea.
-- **Stats only nudge things.** A heavy defense type is harder to push around and an attack type is quicker, but the numbers only shift damage by a few percent. Picking Dranzer over Draciel doesn't decide the match.
-- **Rubbing against each other doesn't count.** Two tops grinding together won't keep draining spin. Clean, separate hits do.
-- **Every special move can be seen coming.** There's always a warning: a target on the ground, lightning markers, a ring closing in. If you move in time, you avoid it, whatever top you're using.
+To make sure no bey is just better than the rest, I had the CPU play thousands of battles against itself on the real game code. At the same skill level, every bey wins roughly 40–60% of its games.
 
-To check that no top is simply better than the others, I ran thousands of CPU-vs-CPU battles on the actual game code. At equal skill, every top wins somewhere around 40–60% of its games overall.
+## 🌀 The beys
 
-## The spinners
+Every bey has a **base move**, which recharges fast, is aimed when you press it and can miss (landing it charges your special faster), and a **special move**, the big one, which charges up during the fight.
 
-Every top has two moves:
-
-- a **base move** that recharges quickly. You aim it when you press the button, and it can miss. If it lands, your special charges faster.
-- a **special move** that charges up during the fight. It's the big one, with its own effect and sound.
-
-| Spinner | Base move | Special move |
+| Bey | Base move | Special move |
 |---|---|---|
-| **Dragoon** | **Gale Trail** – a dash that leaves a gust of wind behind; crossing it blows the rival sideways | **Sky Tornado** – a tornado follows Dragoon, lifts the rival up and throws it wherever you steer |
-| **Dranzer** | **Flame Arc** – a dash that curves around towards the rival | **Phoenix Dive** – Dranzer flies up, you aim a target on the ground and it dives. If the rival dodges, Dranzer is left stunned |
-| **Black Dranzer** | **Dark Claw** – the strongest dash, but a miss costs Black Dranzer some of its own spin | **Eclipse Drain** – a dark sphere that drains the rival's spin and gives it to Black Dranzer |
-| **Driger** | **Twin Pounce** – two dashes in a row; you can re-aim the second one | **Thunder Claw** – three lunges. Tap in rhythm with the closing ring to make them land perfectly |
-| **Draciel** | **Iron Shell** – blocks most of the damage. Raise it right before a hit and it **parries**, sending the damage back | **Maelstrom** – Draciel anchors itself inside a whirlpool that pulls the rival in and slows it down |
-| **Wolborg** | **Frost Howl** – a cone of cold in front of Wolborg that slows whoever it touches | **White Blizzard** – the whole stadium freezes. The rival slides around, and if Wolborg touches it, it's sealed in ice |
-| **Zeus** | **Mirror Guard** – soaks up a hit, then fires it back with a dash | **Dark Dimension** – half of every hit on Zeus bounces back, and lightning strikes where the rival is standing |
+| **Dragoon** | **Gale Trail**: a dash that leaves a gust behind, and crossing it blows the opponent sideways | **Sky Tornado**: a tornado follows Dragoon, lifts the opponent up and throws it wherever you steer |
+| **Dranzer** | **Flame Arc**: a dash that curves towards the opponent | **Phoenix Dive**: Dranzer flies up, you aim a target on the ground and it dives. Dodge it and Dranzer is left stunned |
+| **Black Dranzer** | **Dark Claw**: the strongest dash, but missing costs some of its own spin | **Eclipse Drain**: a dark sphere that drains the opponent's spin and gives it to Black Dranzer |
+| **Driger** | **Twin Pounce**: two dashes in a row, and you can re-aim the second | **Thunder Claw**: three lunges. Tap in rhythm with the closing ring to land them perfectly |
+| **Draciel** | **Iron Shell**: blocks most of the damage. Raise it right before a hit and it **parries**, sending the damage back | **Maelstrom**: Draciel anchors itself in a whirlpool that pulls the opponent in and slows it down |
+| **Wolborg** | **Frost Howl**: a cone of cold that slows whatever it touches | **White Blizzard**: the whole stadium freezes. The opponent slides around, and one touch seals it in ice |
+| **Zeus** | **Mirror Guard**: soaks up a hit, then fires it back with a dash | **Dark Dimension**: half of every hit on Zeus bounces back, and lightning strikes where the opponent stands |
 
-All the effects (fire, wind, water, ice, darkness, lightning) are drawn live with shaders and particles, and every move has its own sound, synthesized in the browser rather than loaded from audio files.
+All the effects (fire, wind, water, ice, darkness, lightning) are drawn live with shaders and particles. Every move has its own sound too, generated in the browser instead of loaded from audio files.
 
-There are three modes:
+## 🏆 Modes
+
 - **Tournament**: beat everyone in the bracket and take the title.
 - **Quick Battle**: you against the CPU, best of 3.
-- **Versus**: you against a friend, each on your own phone. One creates a room, the other enters the 4-letter code and you're in. Works on Wi-Fi or mobile data.
+- **Versus**: you against a friend, each on your own phone. One creates a room, the other types in the 4-letter code, and you're in. Versus is new and I'm still testing it on different networks, so if it doesn't connect for you, [let me know](#-feedback).
 
-If the screen turns upright in the middle of a battle (it happens when you tilt hard), the battle pauses until you're back in landscape.
-
-## Screenshots
+## 📸 Screenshots
 
 <table>
-  <thead>
-    <tr>
-      <th width="33%">Main menu</th>
-      <th width="33%">Choosing a top</th>
-      <th width="33%">In the arena</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td align="center"><img src="images/menu.jpeg" alt="Main menu" width="100%"></td>
-      <td align="center"><img src="images/select.jpeg" alt="Choosing a top" width="100%"></td>
-      <td align="center"><img src="images/fight.png" alt="A battle in the arena" width="100%"></td>
-    </tr>
-  </tbody>
+  <tr>
+    <th width="33%">Main menu</th>
+    <th width="33%">Picking a bey</th>
+    <th width="33%">In the arena</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="images/menu.jpeg" alt="Main menu" width="100%"></td>
+    <td align="center"><img src="images/select.jpeg" alt="Picking a bey" width="100%"></td>
+    <td align="center"><img src="images/fight.png" alt="A battle in the arena" width="100%"></td>
+  </tr>
 </table>
 
-## Controls
+## 🎮 Controls
 
-| | Computer | Phone / tablet |
+| | Phone / tablet | Computer |
 |---|---|---|
-| **Steer** | Drag the on-screen joystick with the mouse | Tilt the phone (or use the joystick) |
+| **Steer** | Tilt the phone (or use the joystick) | Drag the on-screen joystick |
 | **Base move** | Base button | Base button |
 | **Special move** | Special button, once it's charged | Special button, once it's charged |
-| **Recalibrate tilt** | – | *Recalibrate* on the result screen |
+| **Recalibrate tilt** | *Recalibrate* on the result screen | – |
 
 A few tips:
-- Go after the rival. The one charging in deals the damage.
-- The base move dashes in the direction you were aiming when you pressed it, so line it up first.
-- Landing base moves is the fastest way to get your special back.
-- When you see a warning on the ground, get out of the way.
-- Keep away from the wall. That's where the KO pockets are.
+- Go after your opponent. Whoever charges in does the damage.
+- The base move goes where you were aiming when you pressed it, so line it up first.
+- Landing base moves is the quickest way to get your special back.
+- See a warning on the ground? Get out of there.
+- Stay away from the wall, that's where the KO pockets are.
+- If the screen flips upright mid-battle (it happens if you tilt too hard), the game pauses until you're back in landscape.
 
-## Playing on a phone
+## 📱 On your phone
 
-Open [atymia.github.io/Bey-Arena](https://atymia.github.io/Bey-Arena/) and hold the phone in landscape. For the best experience, add it to your home screen. It then opens fullscreen like a normal app (on iPhone this is the only way to get rid of Safari's bars).
+Open **[atymia.github.io/Bey-Arena](https://atymia.github.io/Bey-Arena/)** and turn the phone sideways. For the best experience add it to your home screen: it then opens fullscreen, like a normal app.
 
-| Android (Chrome) | iPhone (Safari) |
+| iPhone (Safari) | Android (Chrome) |
 |---|---|
-| 1. Tap **⋮** in the top right | 1. Tap **Share** (the square with the arrow) |
-| 2. Tap **Add to Home screen** (or **Install app**) | 2. Scroll down and tap **Add to Home Screen** |
-| 3. Confirm | 3. Tap **Add** |
+| 1. Tap **Share** (the square with the arrow) | 1. Tap **⋮** in the top right |
+| 2. Scroll down and tap **Add to Home Screen** | 2. Tap **Add to Home screen** (or **Install app**) |
+| 3. Tap **Add** | 3. Confirm |
 
-Then open it from the new icon. A few things worth knowing:
-- You need an internet connection, since the 3D engine is loaded online.
-- On iPhone, the game asks for permission to use the motion sensors the first time. Tap **Allow** to steer by tilting, or just use the joystick.
+Good to know:
+- You need an internet connection, the 3D engine loads online.
+- On iPhone the game asks to use the motion sensors the first time. Tap **Allow** to steer by tilting.
 - On iPhone, sounds are muted while the silent switch is on.
-- If you still see an old version after an update, close the app completely and reopen it. The version number is shown on the start screen.
+- Still seeing an old version after an update? Close the app completely and open it again. The version number is on the start screen.
 
-## Feedback
+## 💬 Feedback
 
-Bug reports and ideas are very welcome. You can open an issue in the [Issues](https://github.com/Atymia/Bey-Arena/issues) tab. It helps a lot if you mention:
-- the version number on the start screen (e.g. `v47`),
-- your device and browser (e.g. *iPhone 15, Safari* or *Windows, Chrome*),
-- what happened, and which tops were fighting.
+Found a bug or have an idea? Open an [issue](https://github.com/Atymia/Bey-Arena/issues). It helps a lot if you tell me:
+- the version on the start screen (e.g. `v47`),
+- your phone or computer and browser (e.g. *iPhone 15, Safari*),
+- what happened, and which beys were fighting.
 
-## How it's built
+## 🚀 What's next
 
-There's no build step and nothing to install. It's plain HTML and JavaScript, Three.js comes from a CDN, and the game is hosted on GitHub Pages straight from this repository.
+- [x] Damage based on skill, not stats
+- [x] New base and special moves with proper effects
+- [x] A sound for every move
+- [x] Versus mode (phone vs phone)
+- [ ] Original names and artwork
+- [ ] Real 3D models for each bey
+- [ ] More beys
+- [ ] Offline play
+- [ ] Music
 
-To try changes locally, any static server will do:
+<details>
+<summary><b>🛠️ How it's built</b></summary>
+
+<br>
+
+No build step and nothing to install: plain HTML and JavaScript, with Three.js loaded from a CDN. The game is hosted on GitHub Pages straight from this repository.
+
+To try changes locally, any static server works:
 
 ```bash
 python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
-Opening `index.html` straight from disk (`file://`) mostly works, but motion sensors and the home-screen install won't. Those need a server, and on a phone they need HTTPS. After pushing an update, use Ctrl+F5, because browsers (phones especially) like to keep the old files around.
-
-Remember that the code is not open source: see [License](#license).
-
-### What's in here
+Opening `index.html` straight from disk mostly works, but the motion sensors and the home-screen install need a server (and HTTPS on a phone). After pushing an update, hit Ctrl+F5, because browsers love keeping old files around.
 
 ```
-├── index.html      the screens and buttons
-├── style.css       look and layout, including the phone/landscape rules
-├── game.js         the game itself: physics, combat, moves, CPU opponent, controls, 3D scene
+├── index.html      screens and buttons
+├── style.css       look and layout, phone/landscape rules included
+├── game.js         the game: physics, combat, moves, CPU, controls, 3D scene
 ├── fx.js           what the moves look like: shaders, particles, glow
-├── sfx.js          what the moves sound like, synthesized with the Web Audio API
-├── net.js          Versus mode: rooms and syncing the two phones
-├── beys.js         the tops: stats, colors, move names and timings
+├── sfx.js          what the moves sound like, made with the Web Audio API
+├── net.js          Versus mode: rooms and keeping the two phones in sync
+├── beys.js         the beys: stats, colors, move names and timings
 ├── hit.mp3         the clash sound
 ├── manifest.json   name, icon and orientation for the home-screen app
-├── LICENSE         terms of use (all rights reserved)
-└── images/         banner, screenshots and app icons
+├── LICENSE         terms of use
+└── images/         banner, screenshots and icons
 ```
 
-If you want to tinker:
-- stats, colors and moves of each top are in `beys.js`
-- the combat numbers (damage, knockback, parry window…) are at the top of `game.js`
-- what each move actually does is in `triggerBaseMove` and `stepSpecial` in `game.js`
-- how each move looks is in the `kit…` functions in `fx.js`
-- how each move sounds is in the `BASE`, `SPECIAL` and `EVENTS` tables in `sfx.js`
-- the stadium size, walls and KO pockets are in `ARENA` and `buildStadium` in `game.js`
+Where to look if you're curious:
+- stats, colors and moves of each bey → `beys.js`
+- combat numbers (damage, knockback, parry window…) → top of `game.js`
+- what each move does → `triggerBaseMove` and `stepSpecial` in `game.js`
+- how each move looks → the `kit…` functions in `fx.js`
+- how each move sounds → the `BASE`, `SPECIAL` and `EVENTS` tables in `sfx.js`
+- stadium size, walls and KO pockets → `ARENA` and `buildStadium` in `game.js`
 
-## What's next
+</details>
 
-- [x] Damage based on skill rather than stats
-- [x] New base and special moves with proper effects
-- [x] A sound for every move
-- [ ] Original names and artwork
-- [ ] Real 3D models for each top
-- [ ] More tops
-- [x] Versus mode (phone vs phone)
-- [ ] Offline play
-- [ ] Music
+## 🙏 Credits
 
-## Credits
+Made with [Three.js](https://threejs.org/) (r128). Versus mode uses [PeerJS](https://peerjs.com/) (MIT License). Fonts: [Inter](https://rsms.me/inter/), Bebas Neue and Roboto Mono from Google Fonts.
 
-Made with [Three.js](https://threejs.org/) (r128). Online play uses [PeerJS](https://peerjs.com/) (MIT License). Fonts: [Inter](https://rsms.me/inter/), Bebas Neue and Roboto Mono from Google Fonts.
+Lobo is an independent, non-commercial fan project. It isn't affiliated with or endorsed by the owners of Beyblade or any related toy or series, and all trademarks belong to their respective owners.
 
-This is an independent, non-commercial fan project. It isn't affiliated with or endorsed by the owners of Beyblade or any related toy or series, and all trademarks belong to their respective owners.
-
-## License
+## 📄 License
 
 © 2026 MrHide (Atymia). **All rights reserved.**
 
-This project is not open source. You're welcome to play the game and to read the code here on GitHub, but please don't copy, reuse, republish or sell the code, graphics or sounds without asking first. The full terms are in [LICENSE](LICENSE). If you'd like to use something from the project, just open an [issue](https://github.com/Atymia/Bey-Arena/issues) and ask.
+This project is not open source. You're welcome to play the game and read the code here, but please don't copy, reuse, republish or sell the code, graphics or sounds without asking first. Full terms in [LICENSE](LICENSE). Want to use something from the project? Just [open an issue](https://github.com/Atymia/Bey-Arena/issues) and ask.
